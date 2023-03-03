@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components{
+
+  /* Navbar and Header styles  */
+
+  .button1{
+    @apply px-2 py-[0.5px] border-neutral-500 border-[1px] rounded-md mx-4
+  }
+
+  .button2{
+    @apply px-3 py-2 mb-6 hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-lg font-bold text-white uppercase
+  }
+  
+  .search-bar{
+    @apply px-2 py-2.5 border-gray-500 border-[1px] rounded-lg w-72 text-sm
+  }
+  
+}

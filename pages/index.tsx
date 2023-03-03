@@ -1,9 +1,16 @@
+import Navbar from '../components/home/Navbar'
+import Header from '../components/home/Header'
+import ContentLayout from '../components/layout/ContentLayout'
+import MainLayout from '../components/layout/MainLayout'
 
 
 export default function Home() {
   return (
-    <div className='bg-orange-500'>
-      <h1>hello</h1>
+    <div>
+      <MainLayout>
+        <Navbar />
+        <Header />
+      </MainLayout>
     </div>
   )
 }
