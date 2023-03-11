@@ -18,5 +18,29 @@
   .search-bar{
     @apply px-2 py-2.5 border-gray-500 border-[1px] rounded-lg w-72 text-sm
   }
+
+
+
+
+  /* employee registration  */
+
+  .input_field{
+    @apply px-2 py-2 border-gray-500 border-[2px] rounded-lg w-72 mr-0 text-sm bg-[rgb(37,87,167)] bg-opacity-5 shadow-lg hover:shadow-md mb-6
+  }
+
+  .form-heading{
+    @apply text-base font-semibold 
+  }
+
+  .upload-button{
+    display: inline-block;
+    padding: 30px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgb(37,87,167,0.9);
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+  }
   
 }
