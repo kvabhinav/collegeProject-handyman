@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 
 export default function Header() {
     return (
@@ -13,7 +15,7 @@ export default function Header() {
                 <h1 className="text-6xl font-bold text-center leading-relaxed">BOOK YOUR SERVICES IN NO TIME</h1>
             </div>
             <div className="flex justify-end items-center">
-                <button className="button1">BOOKINGS</button>
+                <Link href='' ><button className="button1">BOOKINGS</button></Link>
             </div>
         </header>
     )
