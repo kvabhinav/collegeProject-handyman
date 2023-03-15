@@ -18,7 +18,7 @@ export default function Home(props) {
         <ContentLayout>
         <ul className="flex m-4">
         {props.cards.map((card, index) => (
-          <li className='my-4 mx-auto'>
+          <li className='my-4 mx-auto' key={card.id}>
             <Card
               userId={props.userId}
               ind={index}

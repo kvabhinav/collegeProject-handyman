@@ -85,4 +85,19 @@
   .card__face--back {
     transform: rotateY(180deg);
   }
+
+
+
+  /* bookings page  */
+  .heading{
+    @apply font-bold text-base text-center
+  }
+
+  .subheading{
+    @apply text-center py-8 font-medium
+  }
+
+  .section{
+    @apply w-1/6 h-40 p-2 flex-col
+  }
 }
