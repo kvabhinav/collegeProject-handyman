@@ -49,4 +49,40 @@
   .type{
     @apply px-2 py-2 border-gray-500 border-[2px] rounded-lg w-72 mr-0 text-sm bg-[rgb(37,87,167)] bg-opacity-5 shadow-lg hover:shadow-md 
   }
+
+
+
+
+  
+  /* card components */
+  .scene {
+    width: 500px;
+    height: 288px;
+    perspective: 600px;
+  }
+  
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 1s;
+  }
+  
+  .card.is-flipped {
+    transform: translateX(-100%) rotateY(-180deg);
+  }
+  
+  .card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .card__face--back {
+    transform: rotateY(180deg);
+  }
 }
