@@ -43,4 +43,10 @@
     color: #ffffff;
   }
   
+
+
+  /* bookingForm  */
+  .type{
+    @apply px-2 py-2 border-gray-500 border-[2px] rounded-lg w-72 mr-0 text-sm bg-[rgb(37,87,167)] bg-opacity-5 shadow-lg hover:shadow-md 
+  }
 }

@@ -1,0 +1,16 @@
+//@ts-nocheck
+
+import { ObjectId } from 'mongodb'
+import clientPromise from '../../lib/mongodb'
+
+export default async function handler2(req, res) {
+    const data = req.body.formData
+    const id = req.body.id
+
+    const empId = console.log(Object.getOwnPropertyNames(id)[0])
+    const client = await clientPromise;
+    const db = await client.db('collegeProject')
+    const result = await db.collection('bookings').insertOne({ ...data, empl_id: new ObjectId(empId) })
+
+    res.json(result)
+}
