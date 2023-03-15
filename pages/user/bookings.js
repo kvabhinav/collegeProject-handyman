@@ -23,7 +23,7 @@ export default function Bookings(props) {
                                         </div>
                                         <div className="section">
                                             <h1 className="heading">SERVICE TYPE</h1>
-                                            <h2 className="subheading">{booking.serviceType}</h2>
+                                            <h2 className="subheading">{booking.service}</h2>
                                         </div>
                                         <div className="section">
                                             <h1 className="heading">SERVICING TIME</h1>
@@ -72,7 +72,7 @@ export async function getServerSideProps(context) {
                 {
                     date: result.date,
                     time:result.time,
-                    serviceType: result.serviceType,
+                    service: result.service,
                     emp_name: result.emp_name,
                     emp_image: result.emp_image,
                     id: result._id.toString()

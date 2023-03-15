@@ -86,6 +86,16 @@
     transform: rotateY(180deg);
   }
 
+  .piechart{
+    @apply w-48 h-48 rounded-full bg-white;
+    background:repeating-conic-gradient(
+      from 0deg,
+      #FF6B35 0deg calc(10deg*12),
+      #F7C59F calc(10deg*12) calc(10deg*19),
+      #EFEFD0 calc(10deg*19) calc(10deg*36)
+    );
+  }
+
 
 
   /* bookings page  */

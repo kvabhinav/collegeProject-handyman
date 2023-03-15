@@ -97,11 +97,12 @@ export default function Card(props) {
 
                             {/* booking button  */}
                             <Link href={{
-                                pathname: '/bookingForm',
+                                pathname: '/user/bookingForm',
                                 query: {
                                     emp_id: props.emp_id,
                                     name: props.firstName + props.lastName,
                                     image: props.image,
+                                    service:props.jobs[0].job,
                                     userId: props.userId
                                 }
                             }}><button className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit">BOOK</button></Link>

@@ -20,6 +20,7 @@ function BookingForm({ router }) {
         date:new Date().toLocaleDateString(),
         time:new Date().toLocaleTimeString(),
         user:"rahul",
+        service:router.query.service,
         emp_name:router.query.name,
         emp_image:router.query.image
     })
@@ -38,7 +39,7 @@ function BookingForm({ router }) {
 
     // data submission handling function 
     async function submitForm() {
-        const response = await fetch('/api/hello3', {
+        const response = await fetch('/api/formHandle3', {
             method: 'POST',
             body: JSON.stringify({
                 formData,
