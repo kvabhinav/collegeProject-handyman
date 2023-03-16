@@ -16,7 +16,7 @@ export default function Home(props) {
         <Navbar />
         <Header />
         <ContentLayout>
-        <ul className="flex m-4">
+        <ul className="grid grid-cols-2 m-4">
         {props.cards.map((card, index) => (
           <li className='my-4 mx-auto' key={card.id}>
             <Card

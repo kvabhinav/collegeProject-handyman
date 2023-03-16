@@ -11,7 +11,7 @@ function Form2({ router }) {
 
     // range and field functions 
     const [formData, setFormData] = useState({
-        job: '',
+        job: 'Repairing',
         min: 0,
         max: 0
     })
@@ -33,7 +33,6 @@ function Form2({ router }) {
     function setValues() {
         setArray(prevArray => {
             if (array.length >= 2) {
-                errors = true
                 return [
                     ...prevArray
                 ]
@@ -47,7 +46,7 @@ function Form2({ router }) {
         })
         setFormData(() => {
             return {
-                job: '',
+                job: 'Repairing',
                 min: 0,
                 max: 0
             }
@@ -159,13 +158,13 @@ function Form2({ router }) {
                         <label htmlFor="" className='form-heading text-lg'>Select your Job</label>
                         <br />
                         <select name="job" id="" className='input_field my-2' value={formData.job} onChange={handleChange}>
-                            <option value="Repairing" >Repairing</option>
-                            <option value="Electrical">Electrical</option>
+                            <option value="Repairing">Repairing</option>
+                            <option value="Electrician">Electrician</option>
                             <option value="Plumbing">Plumbing</option>
                             <option value="Carpenter">Carpenter</option>
                             <option value="Painting">Painting</option>
                             <option value="Plastering">Plastering</option>
-                            <option value="Tile Installation">Tile Installation</option>
+                            <option value="Tiling">Tiling</option>
                         </select>
                     </div>
                     <div className='border-black border-2 rounded-md w-fit p-2'>
@@ -187,7 +186,7 @@ function Form2({ router }) {
                 {/* job field display  */}
                 <div className='w-2/3  mt-32'>
                     {array.map((arr) => {
-                        if (arr.job === 'Electrical' && arr.job === 'Repairing') {
+                        if (arr.job === 'Electrical' && arr.job==="Repairing" && arr.job==="Plumbing") {
                             certificate = true
                         } else {
                             certificate = false

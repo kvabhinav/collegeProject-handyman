@@ -19,7 +19,9 @@ export default function Form() {
         postCode: 0,
         district: "",
         state: "",
-        image: ''
+        image: '',
+        experience:'0',
+        rating:'new'
     })
 
 

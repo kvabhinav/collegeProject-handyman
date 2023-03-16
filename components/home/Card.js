@@ -26,7 +26,7 @@ export default function Card(props) {
         color1 = "#17B890"
         color2 = "#88CCF1"
         color3 = "#DEE5E5"
-    } else if (props.jobs[0].job === "Plumber") {
+    } else if (props.jobs[0].job === "Plumbing") {
         color1 = "#3587A4"
         color2 = "#9DC5BB"
         color3 = "#C1DFF0"
@@ -38,7 +38,7 @@ export default function Card(props) {
         color1 = '#2A324B'
         color2 = "#F7C59F"
         color3 = "#767B91"
-    } else if (props.jobs[0].job === "Tile Installation") {
+    } else if (props.jobs[0].job === "Tiling") {
         color1 = '#485696'
         color2 = "#E7E7E7"
         color3 = "#F9C784"
@@ -63,10 +63,11 @@ export default function Card(props) {
                 {/* card front side  */}
                 <div className=" border-black border-[1px] rounded-3xl flex my-2 card__face">
                     <div className="w-7/12 h-72 p-6 pb-4">
-                        <div className="flex items-center h-1/6">
+                        <div className="flex-row items-center h-1/6">
                             <h1 className="text-2xl font-bold ">{props.firstName} {props.lastName}</h1>
+                            <h1 className="online">online</h1>
                         </div>
-                        <h1 className="h-1/6 font-medium">Payment: {props.jobs[0].min}Rs to {props.jobs[0].max}Rs</h1>
+                        <h1 className="h-1/6 font-medium pt-4">Payment: {props.jobs[0].min}Rs to {props.jobs[0].max}Rs</h1>
                         <div className="h-3/6">
                             <h1 className="font-bold underline decoration-solid decoration-1">Description</h1>
                             <h1 className="font-medium">Available locations: <br />

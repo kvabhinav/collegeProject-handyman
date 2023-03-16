@@ -96,6 +96,18 @@
     );
   }
 
+  .online{
+    @apply px-2 py-[0.5] bg-green-500 rounded-xl text-sm font-semibold mx-1 w-fit 
+  }
+
+  .element{
+    @apply bg-gray-300 px-2 text-sm mx-2 rounded-lg;
+  }
+
+  .fieldFont{
+    font-family: 'Antonio', sans-serif;
+  }
+
 
 
   /* bookings page  */
