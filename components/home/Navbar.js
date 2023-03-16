@@ -7,8 +7,8 @@ export default function Navbar(){
                 <Link href='/' ><h1 className="font-bold text-xl">HANDYMAN</h1></Link>
             </div>
             <div className="flex">
-                <Link href=''><button className="button1">LOGIN</button></Link>
-                <Link href='' ><button className="button1">EMPLOYEE LOGIN</button></Link>
+                <Link href='user'><button className="button1">LOGIN</button></Link>
+                <Link href='employee' ><button className="button1">EMPLOYEE LOGIN</button></Link>
             </div>
         </nav>
     )
