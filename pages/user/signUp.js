@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { useState } from 'react'
-import { useRouter } from 'react'
+import { useRouter } from 'next/router'
 
 
 export default function userSignUp() {
@@ -82,7 +82,7 @@ export default function userSignUp() {
 
                 </div>
                 <div className="mt-10">
-                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" >Login</button></Link>
+                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>SIGN UP</button></Link>
                 </div>
                 <div className="flex justify-center m-4">
                     <a href="#" className="uppercase font-semibold text-xs">or signIn</a>

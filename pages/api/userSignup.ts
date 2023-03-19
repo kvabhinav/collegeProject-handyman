@@ -7,5 +7,6 @@ export default async function handler(req,res){
     const client= await clientPromise;
     const db = await client.db('collegeProject')
     const result= await db.collection('users').insertOne({...data})
+    console.log(result)
     res.json(result)
 }
