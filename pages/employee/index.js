@@ -66,7 +66,7 @@ export default function EmpSignin() {
                     <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" >Login</button></Link>
                 </div>
                 <div className="flex justify-center m-4">
-                    <a href="#" className="uppercase font-semibold text-xs">or sign up</a>
+                    <Link href='employee/registration1'><h1 className="uppercase font-semibold text-xs">or sign up</h1></Link>
                 </div>
 
                 <div className="px-6 text-xs ml-16 w-fit">
