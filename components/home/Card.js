@@ -7,8 +7,8 @@ export default function Card(props) {
     // card toggle function 
     function toggleclass(ind) {
         const elements = document.querySelectorAll('.card');
-        elements.forEach((x,index) => {
-            if(index===ind){
+        elements.forEach((x, index) => {
+            if (index === ind) {
                 x.classList.toggle('is-flipped')
             }
         })
@@ -97,16 +97,20 @@ export default function Card(props) {
                         <div className="h-1/6 flex items-end justify-center">
 
                             {/* booking button  */}
-                            <Link href={{
+                            {props.userId !== "" ? <Link href={{
                                 pathname: '/user/bookingForm',
                                 query: {
                                     emp_id: props.emp_id,
                                     name: props.firstName + props.lastName,
                                     image: props.image,
-                                    service:props.jobs[0].job,
+                                    service: props.jobs[0].job,
                                     userId: props.userId
                                 }
-                            }}><button className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit">BOOK</button></Link>
+                            }} onClick={(event)=>event.stopPropagation()}><button className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit">BOOK</button></Link> : <button
+                                className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit" onClick={(event) => {
+                                    event.stopPropagation()
+                                    props.toggle()
+                                }}>BOOK</button>}
                         </div>
                     </div>
 
