@@ -82,10 +82,10 @@ export default function userSignUp() {
 
                 </div>
                 <div className="mt-10">
-                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>SIGN UP</button></Link>
+                    <button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>SIGN UP</button>
                 </div>
                 <div className="flex justify-center m-4">
-                    <a href="#" className="uppercase font-semibold text-xs">or signIn</a>
+                    <Link href='/user' className="uppercase font-semibold text-xs">or signIn</Link>
                 </div>
 
                 <div className="px-6 text-xs ml-16 w-fit">

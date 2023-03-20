@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 
 import Link from "next/link";
 import React from "react";
@@ -41,10 +43,18 @@ export default function EmpSignin() {
 
         const data = await response.json()
 
-        router.push({
-            pathname: "/employee/profile",
-            query: data._id
-        })
+        
+
+        if (data === null) {
+            const error = document.getElementById("error")
+            error.style.display = "flex";
+
+        } else {
+            router.push({
+                pathname: "/employee/profile",
+                query: data._id
+            })
+        }
 
     }
 
@@ -85,7 +95,12 @@ export default function EmpSignin() {
 
                 </div>
                 <div className="mt-10">
-                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" >Login</button></Link>
+                    <button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>Login</button>
+                </div>
+
+                {/* error class  */}
+                <div className="hidden px-4 py-2  justify-center items-center font-bold bg-red-400 rounded-md border-2 border-red-700 my-2 mx-auto" id="error">
+                    <h1 className="text-center">INCORRECT EMAIL PHONE OR PASSWORD</h1>
                 </div>
                 <div className="flex justify-center m-4">
                     <Link href='employee/registration1'><h1 className="uppercase font-semibold text-xs">or sign up</h1></Link>

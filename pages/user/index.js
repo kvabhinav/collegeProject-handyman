@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import Link from "next/link"
 import React from "react"
 import { useState } from 'react'
@@ -6,20 +8,20 @@ import { useRouter } from 'next/router'
 
 export default function UserSignin() {
 
-    const router=useRouter()
+    const router = useRouter()
 
 
     // state for form 
-    const [user,setUser]=useState({
-        email:"",
-        phone:"",
-        password:""
+    const [user, setUser] = useState({
+        email: "",
+        phone: "",
+        password: ""
     })
 
 
     // onchange handling function 
     function handleChange(event) {
-        
+
         setUser((prevData => {
             return {
                 ...prevData,
@@ -31,22 +33,29 @@ export default function UserSignin() {
 
     async function submitForm() {
         const response = await fetch('/api/userSignin', {
-          method: 'POST',
-          body: JSON.stringify(user),
-          headers: {
-            'Content-Type': 'application/json'
-          }
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-    
+
         const data = await response.json()
 
-        router.push({
-            pathname:"/",
-            query:data._id
-        })
-        
-      }
-    
+        if (data === null) {
+            const error = document.getElementById("error")
+            error.style.display = "flex";
+
+        } else {
+            router.push({
+                pathname: "/",
+                query: data._id
+            })
+        }
+
+
+    }
+
 
 
     return (
@@ -85,9 +94,13 @@ export default function UserSignin() {
                 <div className="mt-10">
                     <button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>Login</button>
                 </div>
+                <div className="hidden px-4 py-2  justify-center items-center font-bold bg-red-400 rounded-md border-2 border-red-700 my-2 mx-auto" id="error">
+                    <h1 className="text-center">INCORRECT EMAIL PHONE OR PASSWORD</h1>
+                </div>
                 <div className="flex justify-center m-4">
                     <Link href='/user/signUp' className="uppercase font-semibold text-xs">or sign up</Link>
                 </div>
+
 
                 <div className="px-6 text-xs ml-16 w-fit">
 
