@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 
-export default function Header() {
+export default function Header(props) {
     return (
         <header className="pb-12 pt-20 border-b-[1px] border-neutral-400">
             <div className="mx-auto w-fit ">
@@ -15,7 +15,12 @@ export default function Header() {
                 <h1 className="text-6xl font-bold text-center leading-relaxed">BOOK YOUR SERVICES IN NO TIME</h1>
             </div>
             <div className="flex justify-end items-center">
-                <Link href='/user/bookings' ><button className="button1">BOOKINGS</button></Link>
+                <Link href={{
+                    pathname:'/user/bookings',
+                    query:{
+                        user:props.user
+                    }
+                }} ><button className="button1">BOOKINGS</button></Link>
             </div>
         </header>
     )

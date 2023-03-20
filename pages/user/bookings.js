@@ -1,13 +1,13 @@
 import MainLayout from "../../components/layout/MainLayout"
 import Navbar from "../../components/home/Navbar"
 
-import clientPromise from '@/lib/mongodb'
+
 
 
 export default function Bookings(props) {
     return (
         <MainLayout>
-            <Navbar />
+            <Navbar user={props.userId}/>
                 <div className="container mx-auto">
 
 
@@ -23,7 +23,7 @@ export default function Bookings(props) {
                                         </div>
                                         <div className="section">
                                             <h1 className="heading">SERVICE TYPE</h1>
-                                            <h2 className="subheading">{booking.service}</h2>
+                                            <h2 className="subheading">{booking.serviceType}</h2>
                                         </div>
                                         <div className="section">
                                             <h1 className="heading">SERVICING TIME</h1>
@@ -60,25 +60,35 @@ export default function Bookings(props) {
 export async function getServerSideProps(context) {
     const req = context.req
     const res = context.res
-    const userid = context.query
+    const userId = context.query.user
+    console.log(userId)
 
-    const client = await clientPromise;
-    const db = await client.db('collegeProject')
-    const results = await db.collection('bookings').find({ user: "rahul" }).toArray()
 
+
+    // bookings fetch function 
+        const response = await fetch('http://localhost:3000/api/bookings', {
+            method: 'POST',
+            body: JSON.stringify(userId),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const results = await response.json();
     return {
         props: {
             bookings: results.map(result => (
                 {
                     date: result.date,
                     time:result.time,
-                    service: result.service,
+                    serviceType: result.serviceType,
                     emp_name: result.emp_name,
                     emp_image: result.emp_image,
                     id: result._id.toString()
 
                 }
-            ))
+            )),
+            userId:userId
         }
     }
 }

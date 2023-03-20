@@ -1,9 +1,12 @@
-import Link from "next/link";
-import React from "react";
+import Link from "next/link"
+import React from "react"
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 
 export default function UserSignin() {
+
+    const router=useRouter()
 
 
     // state for form 
@@ -25,6 +28,24 @@ export default function UserSignin() {
         }))
     }
 
+
+    async function submitForm() {
+        const response = await fetch('/api/userSignin', {
+          method: 'POST',
+          body: JSON.stringify(user),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+    
+        const data = await response.json()
+
+        router.push({
+            pathname:"/",
+            query:data._id
+        })
+        
+      }
     
 
 
@@ -62,7 +83,7 @@ export default function UserSignin() {
 
                 </div>
                 <div className="mt-10">
-                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" >Login</button></Link>
+                    <button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>Login</button>
                 </div>
                 <div className="flex justify-center m-4">
                     <Link href='/user/signUp' className="uppercase font-semibold text-xs">or sign up</Link>

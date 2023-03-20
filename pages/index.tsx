@@ -13,8 +13,8 @@ export default function Home(props) {
   return (
     <div>
       <MainLayout>
-        <Navbar />
-        <Header />
+        <Navbar user={props.userId}/>
+        <Header user={props.userId} />
         <ContentLayout>
         <ul className="grid grid-cols-2 m-4">
         {props.cards.map((card, index) => (
@@ -50,6 +50,16 @@ export async function getServerSideProps(context) {
   const res = context.res
   const user=context.query
 
+  // console.log(user)
+  let userId
+  if (Object.keys(user).length === 0) {
+    userId=""
+  }else {
+    userId = `${Object.getOwnPropertyNames(user)[0]}`
+    // console.log(userId)
+    // console.log(new ObjectId(userId))
+  }
+
   const client = await clientPromise;
   const db = await client.db('collegeProject')
   const results = await db.collection('employees').find({}, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
@@ -67,7 +77,8 @@ export async function getServerSideProps(context) {
           rating: result.rating,
           id: result._id.toString()
         }
-      ))
+      )),
+      userId:userId
     }
   }
 }
