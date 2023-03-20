@@ -13,7 +13,7 @@ export default function Bookings(props) {
 
                     {/* booking lists  */}
                     <ul >
-                        {props.bookings.map(booking => (
+                        {Object.keys(props.bookings).length === 0 ? <h1 className="flex justify-center items-end mt-96">YOU DON'T HAVE ANY BOOKINGS</h1> : props.bookings.map(booking => (
                             <li key={booking.id}>
                                 <div className="mx-40 flex-col ">
                                     <div className="bg-[#EDF4FA] h-40 mx-12 flex rounded-xl my-4">
