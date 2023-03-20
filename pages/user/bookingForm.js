@@ -19,7 +19,6 @@ function BookingForm({ router }) {
         area: '',
         date:new Date().toLocaleDateString(),
         time:new Date().toLocaleTimeString(),
-        user:"rahul",
         service:router.query.service,
         emp_name:router.query.name,
         emp_image:router.query.image
@@ -43,7 +42,8 @@ function BookingForm({ router }) {
             method: 'POST',
             body: JSON.stringify({
                 formData,
-                id: router.query.emp_id
+                id: router.query.emp_id,
+                user:router.query.userId
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -125,7 +125,10 @@ function BookingForm({ router }) {
                                 </div>
                                 <div className="col-span-2 mt-10">
 
-                                    <Link href="/user/bookingSuccess">
+                                    <Link href={{
+                                        pathname:"/user/bookingSuccess",
+                                        query:router.query.userId
+                                    }}>
                                         <button onClick={submitForm}
                                             className="px-4 py-2 hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white">BOOK
                                             NOW</button>
