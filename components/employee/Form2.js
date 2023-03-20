@@ -127,7 +127,7 @@ function Form2({ router }) {
             body: JSON.stringify({
                 array,
                 array2,
-                itemId: router.query.name
+                itemId: router.query.empl_id
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -135,7 +135,10 @@ function Form2({ router }) {
         })
 
         const data = await response.json()
-        router2.push('/')
+        router2.push({
+            pathname:"/employee/signUp",
+            query:router.query.empl_id
+        })
     }
 
 

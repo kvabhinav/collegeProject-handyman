@@ -2,12 +2,13 @@
 import Link from "next/link";
 import React from "react";
 import { useState } from 'react'
+import { withRouter } from 'next/router'
 import { useRouter } from 'next/router'
 
 
-export default function EmpSignin() {
+function empSignUp({ router }) {
 
-    const router = useRouter()
+    const router1=useRouter()
 
     // state for form 
     const [user,setUser]=useState({
@@ -29,11 +30,14 @@ export default function EmpSignin() {
     }
 
 
-    // signin submission function 
+    // data submission handling function 
     async function submitForm() {
-        const response = await fetch('/api/userSignin', {
+        const response = await fetch('/api/employeeSignup', {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify({
+                user:user,
+                emp_id:router.query
+            }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -41,13 +45,18 @@ export default function EmpSignin() {
 
         const data = await response.json()
 
-        router.push({
-            pathname: "/employee/profile",
-            query: data._id
-        })
+        if (data.modifiedCount === 0) {
+            const error = document.getElementById("error")
+            error.style.display = "flex";
 
+        } else {
+            router1.push({
+                pathname: "/employee/profile",
+                query: router.query
+            })
+        }
+        
     }
-
     
 
 
@@ -55,7 +64,7 @@ export default function EmpSignin() {
         <div className="container mx-auto ">
             <div className="mx-auto max-w-sm bg-[rgb(37,87,167)] bg-opacity-10 px-8 py-14 pb-24 my-16 rounded-lg shadow-xl hover:shadow-2xl">
                 <div className="text-center mb-8">
-                    <h1 className="font-extrabold text-3xl"> Employee Login</h1>
+                    <h1 className="font-extrabold text-3xl"> Employee SignUp</h1>
                 </div>
 
                 <form action="#">
@@ -73,22 +82,19 @@ export default function EmpSignin() {
                         <label>Password</label>
                         <input type="password" className="block w-full px-4 py-2 border rounded-xl border-gray-500 shadow-md" name="password" value={user.password} onChange={handleChange} />
                     </div>
-                    <div className="flex justify-end">
-                        <a href="#" className="font-normal text-xs ">Forgot password &#x3F;</a>
-                    </div>
 
 
                 </form>
-                <div className="flex items-center mb-4">
+                <div className="flex items-center my-4">
                     <input type="checkbox" name="" id="default-checkbox" className="w-4 h-4 rounded-full shadow-md hover:shadow-lg  focus:ring-[rgb(37,87,167)] dark:focus:ring-[rgb(37,87,167)]   " />
                     <label htmlFor="default-checkbox" className="ml-2 text-xs font-medium  ">Accept all terms and conditions </label>
 
                 </div>
-                <div className="mt-10">
-                    <Link href='/'><button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" >Login</button></Link>
+                <div className="my-10">
+                    <button className="cursor-pointer font-semibold p-1 rounded-full  bg-[rgb(37,87,167)] text-white w-full hover:bg-[rgb(37,87,167,0.9)] hover:text-white shadow-md hover:shadow-inner" onClick={submitForm}>Login</button>
                 </div>
-                <div className="flex justify-center m-4">
-                    <Link href='employee/registration1'><h1 className="uppercase font-semibold text-xs">or sign up</h1></Link>
+                <div className="hidden px-4 py-2  justify-center items-center font-bold bg-red-400 rounded-md border-2 border-red-700 my-2 mx-auto" id="error">
+                    <h1 className="text-center">INCORRECT EMAIL PHONE OR PASSWORD</h1>
                 </div>
 
                 <div className="px-6 text-xs ml-16 w-fit">
@@ -112,3 +118,5 @@ export default function EmpSignin() {
         </div>
     )
 }
+
+export default withRouter(empSignUp)

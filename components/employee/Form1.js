@@ -66,7 +66,7 @@ export default function Form() {
         let alldata = await response.json();
         router.push({
             pathname: '/employee/registration2',
-            query: { name: alldata.insertedId }
+            query: { empl_id: alldata.insertedId }
         })
     }
 
