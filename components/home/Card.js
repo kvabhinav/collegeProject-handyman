@@ -2,6 +2,12 @@
 
 import Link from 'next/link'
 
+// apexchart imports 
+import dynamic from 'next/dynamic'
+import React from "react";
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
+
 export default function Card(props) {
 
     // card toggle function 
@@ -51,6 +57,37 @@ export default function Card(props) {
         color2 = "#CCC9A1"
         color3 = "#F0FFCE"
     }
+
+
+
+    // piechart functions 
+    let jobName = props.jobs.map((item, index) => {
+        return item.job
+    },)
+
+    let jobCount = props.jobs.map((item, index) => {
+        if (item.count != undefined) {
+            return item.count
+        }
+    })
+
+    let jobColor= props.jobs.map((item)=>{
+        if(item.job==='Repairing'){
+            return "#17B890"
+        }else if(item.job==='Plumber'){
+            return '#3587A4'
+        }else if(item.job==="Electrician"){
+            return "#9DB4AB"
+        }else if (item.job==="Carpenter"){
+            return "#2A324B"
+        }else if(item.job==="Tiling"){
+            return "#485696"
+        }else if(item.job==="Plastering"){
+            return "#A88FAC"
+        }else if(item.job==="Painter"){
+            return "#A53F2B"
+        }
+    })
 
 
 
@@ -132,34 +169,48 @@ export default function Card(props) {
 
                 {/* card back side  */}
                 <div className="card__face card__face--back bg-[#3587A4] text-white rounded-3xl">
-                    <div className="h-1/6 flex items-end font-bold text-lg px-4 pb-2 underline">
-                        <h1>{props.name}</h1>
-                    </div>
-                    <div className="w-full h-4/6 flex">
-                        <div className="w-4/6 flex px-6 items-center">
-                            <div className="piechart flex justify-center items-center" id="pie">
-                                <div className="w-20 h-20 rounded-full bg-[#3587A4]  flex justify-center items-center">
-                                    <h1 className="text-2xl font-bold">36</h1>
+                <div className='h-full w-full flex'>
+                            <div className="w-3/6 h-full flex">
+                                <Chart
+                                    className="my-auto mx-0"
+                                    type="donut"
+                                    width={300}
+                                    height={400}
+                                    series={jobCount}
+                                    options={{
+                                        title: {
+                                        },
+                                        noData: { text: "Empty Data" },
+                                        labels: jobName,
+                                        plotOptions: {
+                                            pie: {
+                                                donut: {
+                                                    labels: {
+                                                        show: true,
+                                                        total: {
+                                                            show: true,
+                                                            showAlways: true,
+                                                            fontSize: 16,
+                                                            color: '#fff',
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        colors: jobColor
+                                    }}
+                                >
+                                </Chart>
+
+                            </div>
+                            <div className="h-full w-3/6 flex justify-around itmes-end py-2 ">
+                                <div className="py-16">
+                                    <h1 className="text-6xl font-bold text-center">{props.experience}</h1>
+                                    <br />
+                                    <h2>days experience</h2>
                                 </div>
                             </div>
                         </div>
-                        <div className="2/6 py-10">
-                            <h1 className="text-6xl font-bold text-center">{props.experience}</h1>
-                            <br />
-                            <h2>days experience</h2>
-                        </div>
-                    </div>
-                    <div className="h-1/6 flex justify-around itmes-end py-2 ">
-                        {props.jobs.map((item, index) => {
-                            return (
-                                <div className="flex items-center " key={index}>
-                                    <div className="w-5 h-5 rounded-full  bg-[#FF6B35] mx-2">
-                                    </div>
-                                    <h2 >{item.job}</h2>
-                                </div>
-                            )
-                        })}
-                    </div>
                 </div>
             </div>
         </div>
