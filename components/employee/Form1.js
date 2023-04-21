@@ -72,7 +72,7 @@ export default function Form() {
 
 
     return (
-        <div>
+        <div className='border-2 border-black mt-4 border-dashed'>
             <form method='POST' className="w-fit mx-auto">
                 <div className=' flex justify-center  py-10 no-underline hover:underline'>
                     <h1 className='text-3xl font-bold'>EMPLOYEE REGISTRATION</h1>

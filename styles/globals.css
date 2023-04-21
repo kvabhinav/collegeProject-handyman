@@ -122,4 +122,10 @@
   .section{
     @apply w-1/6 h-40 p-2 flex-col
   }
+
+  /* employee profile  */
+
+  .section2{
+    @apply w-1/6 h-32 p-2 flex-col
+  }
 }
