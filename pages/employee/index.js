@@ -33,7 +33,7 @@ export default function EmpSignin() {
 
     // signin submission function 
     async function submitForm() {
-        const response = await fetch('/api/userSignin', {
+        const response = await fetch('/api/employeeSignin', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {

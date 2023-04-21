@@ -32,8 +32,8 @@ export default function Card(props) {
         color1 = "#17B890"
         color2 = "#88CCF1"
         color3 = "#DEE5E5"
-    } else if (props.jobs[0].job === "Plumbing") {
-        color1 = "#3587A4"
+    } else if (props.jobs[0].job === "Plumber") {
+        color1 = "#7A82AB"
         color2 = "#9DC5BB"
         color3 = "#C1DFF0"
     } else if (props.jobs[0].job === "Electrician") {
@@ -75,7 +75,7 @@ export default function Card(props) {
         if(item.job==='Repairing'){
             return "#17B890"
         }else if(item.job==='Plumber'){
-            return '#3587A4'
+            return "#7A82AB"
         }else if(item.job==="Electrician"){
             return "#9DB4AB"
         }else if (item.job==="Carpenter"){

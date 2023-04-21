@@ -13,7 +13,8 @@ function Form2({ router }) {
     const [formData, setFormData] = useState({
         job: 'Repairing',
         min: 0,
-        max: 0
+        max: 0,
+        count: 0
     })
 
     const [array, setArray] = useState([])
@@ -48,7 +49,8 @@ function Form2({ router }) {
             return {
                 job: 'Repairing',
                 min: 0,
-                max: 0
+                max: 0,
+                count: 0
             }
         })
     }
@@ -163,9 +165,9 @@ function Form2({ router }) {
                         <select name="job" id="" className='input_field my-2' value={formData.job} onChange={handleChange}>
                             <option value="Repairing">Repairing</option>
                             <option value="Electrician">Electrician</option>
-                            <option value="Plumbing">Plumbing</option>
+                            <option value="Plumber">Plumber</option>
                             <option value="Carpenter">Carpenter</option>
-                            <option value="Painting">Painting</option>
+                            <option value="Painter">Painter</option>
                             <option value="Plastering">Plastering</option>
                             <option value="Tiling">Tiling</option>
                         </select>

@@ -37,8 +37,8 @@ export default function Profile(props) {
                         </div>
 
                     </div>
-                    
-                {/* second box  */}
+
+                    {/* second box  */}
                     <div className="w-4/6 h-96 border-2 border-black rounded-xl ml-10">
                         <div className="w-full h-10 rounded-bl-3xl rounded-br-3xl rounded-t-xl bg-[#99DAFF] py-1">
                             <h1 className="font-bold text-xl text-center ">TODAYS PROGRESS</h1>
@@ -88,11 +88,12 @@ export default function Profile(props) {
 export async function getServerSideProps(context) {
     const req = context.req
     const res = context.res
-    const user = "6411c9e11d0bd4125c0650c0"
+    const user = context.query
+    let userId = `${Object.getOwnPropertyNames(user)[0]}`
 
     const client = await clientPromise;
     const db = await client.db('collegeProject')
-    const result = await db.collection('employees').findOne({ _id: new ObjectId(user) })
+    const result = await db.collection('employees').findOne({ _id: new ObjectId(userId) })
     return {
         props: {
             name: result.firstName + result.lastName,
