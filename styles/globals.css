@@ -128,4 +128,46 @@
   .section2{
     @apply w-1/6 h-32 p-2 flex-col
   }
+
+
+  /* toggleButton experimentation  */
+  
+  .tri-state-toggle {
+    background: rgba(165,170,174,0.25);
+    box-shadow: inset 0 2px 8px 0 rgba(165,170,174,0.25);
+    border-radius: 24px;
+    display: inline-block;
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: column;
+  transition: all 500ms ease; 
+}
+
+.tri-state-toggle-button {
+    border-radius: 22px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    background-color: transparent;
+    border: 0px solid transparent;
+    margin: 2px;
+    color: black;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.tri-state-toggle-button.active {
+    border: 1px solid rgba(207,207,207,0.6);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+    color: white;
+    font-weight: 500;
+  transition: all .5s ease-in;
+}
+
+
+.tri-state-toggle-button:focus {
+  outline: none;
+}
 }

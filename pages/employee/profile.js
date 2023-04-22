@@ -48,6 +48,38 @@ export default function Profile(props) {
     })
 
 
+    // toggle button function 
+    function toggle(e) {
+        let button1 = document.getElementById('toggle-button1')
+        let button2 = document.getElementById('toggle-button2')
+        let button3 = document.getElementById('toggle-button3')
+        // alert(e.target.id)
+        if (e.target.id === "toggle-button1") {
+            e.target.classList.add('active')
+            e.target.style.backgroundColor='green'
+            button2.classList.remove('active')
+            button2.style.backgroundColor=''
+            button3.classList.remove('active')
+            button3.style.backgroundColor=''
+
+        } else if (e.target.id === "toggle-button2") {
+            e.target.classList.add('active')
+            e.target.style.backgroundColor='blue'
+            button1.classList.remove('active')
+            button1.style.backgroundColor=''
+            button3.classList.remove('active')
+            button3.style.backgroundColor=''
+        } else if (e.target.id === "toggle-button3") {
+            e.target.classList.add('active')
+            e.target.style.backgroundColor='red'
+            button1.classList.remove('active')
+            button1.style.backgroundColor=''
+            button2.classList.remove('active')
+            button2.style.backgroundColor=''
+        }
+    }
+
+
     return (
 
         <MainLayout>
@@ -65,12 +97,28 @@ export default function Profile(props) {
 
                             <div className='text-center font-semibold'>
                                 <h1 className='font-bold text-xl'>{props.name}</h1>
-                                <h2>Kannur,kerala,india</h2>
                                 <h2>{props.email}</h2>
                                 <h2>{props.phone}</h2>
                             </div>
                             <div className='flex justify-center items-center'>
                                 <button className='font-semibold text-xl  bg-[rgb(37,87,167)] opacity-90 px-2 text-white my-2 rounded-lg '>PLUMBER</button>
+                            </div>
+
+                            {/* toggle button  */}
+                            <div className="tri-state-toggle flex-row mx-14 mb-1">
+
+                                <button className="tri-state-toggle-button" id="toggle-button1" onClick={toggle}>
+                                    online
+                                </button>
+
+                                <button className="tri-state-toggle-button" id="toggle-button2" onClick={toggle}>
+                                    working
+                                </button>
+
+                                <button className="tri-state-toggle-button" id="toggle-button3" onClick={toggle}>
+                                    offline
+                                </button>
+
                             </div>
 
                         </div>
@@ -101,9 +149,9 @@ export default function Profile(props) {
 
                         </div>
                         <div className="flex w-full ">
-                            <div className="w-5/12 ">
+                            <div className="w-6/12 ">
                                 {totalJobs !== 0 ? <Chart
-                                    className="my-auto mx-0"
+                                    className="my-auto ml-16"
                                     type="donut"
                                     width={300}
                                     height={400}
@@ -130,9 +178,9 @@ export default function Profile(props) {
                                         colors: jobColor
                                     }}
                                 >
-                                </Chart> : <h1 className="font-bold text-black text-center my-4">no jobs</h1>}
+                                </Chart> : <h1 className="font-bold text-black text-center text-3xl my-14">0 work taken</h1>}
                             </div>
-                            <div className="w-7/12 flex-col justify-center items-center p-6">
+                            <div className="w-6/12 flex-col justify-center items-center p-6">
                                 <div className="bg-[#99DAFF] h-14 w-56 rounded-lg border-2 border-gray-200 shadow-lg hover:shadow-inner p-1 ml-auto mr-10">
                                     <h1 className="text-xs text-center font-bold">TOTAL EARNINGS</h1>
                                     <h2 className="font-bold text-2xl text-center">0</h2>
@@ -146,11 +194,11 @@ export default function Profile(props) {
                     </div>
                 </div>
 
-                <div className='border-black border-2 rounded-md mt-4 h-90 w-full'>
+                <div className='border-black border-2 rounded-md mt-4 w-full'>
                     {/* booking lists  */}
                     <ul >
-                        {Object.keys(props.bookings).length === 0 ? <h1 className="flex justify-center items-end mt-96">YOU DON'T HAVE ANY BOOKINGS</h1> : props.bookings.map(booking => (
-                            <li >
+                        {Object.keys(props.bookings).length !== 0 ? <h1 className="flex justify-center items-end my-10">No works yet...</h1> : props.bookings.map(booking => (
+                            <li key={booking._id}>
                                 <div className="bg-[#EDF4FA] h-40 mx-2 flex rounded-xl my-4">
                                     <div className="section2">
                                         <h1 className="heading">DATE</h1>
@@ -222,7 +270,8 @@ export async function getServerSideProps(context) {
                     city: item.city,
                     buildingName: item.buildingName,
                     building: item.building,
-                    area: item.area
+                    area: item.area,
+                    _id:item._id.toString()
                 }
             )),
 
