@@ -70,19 +70,33 @@ export async function getServerSideProps(context) {
   const res = context.res
   const user = context.query
 
-  // console.log(user)
+
+  // searching variables 
+  let jobTitle = ""
+  let location = ""
+  jobTitle=context.query.jobTitle
+  location=context.query.location
+
+  console.log(location,jobTitle)
   let userId
   if (Object.keys(user).length === 0) {
     userId = ""
   } else {
     userId = `${Object.getOwnPropertyNames(user)[0]}`
-    // console.log(userId)
-    // console.log(new ObjectId(userId))
   }
 
   const client = await clientPromise;
   const db = await client.db('collegeProject')
-  const results = await db.collection('employees').find({}, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+
+  let results = []
+  if (jobTitle === undefined || location === undefined) {
+    results = await db.collection('employees').find({}, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+  } else if (jobTitle !== undefined && location==="") {
+    results = await db.collection('employees').find({ "jobs.job": jobTitle }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+  } else if (jobTitle === "" && location!== undefined){
+    results = await db.collection('employees').find({ "locations.place": location }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+  }
+  // console.log(results)
 
   return {
     props: {
