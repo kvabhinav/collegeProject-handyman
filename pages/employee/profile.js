@@ -3,6 +3,7 @@
 import React from 'react'
 import clientPromise from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { useState, useEffect } from 'react'
 
 import ContentLayout from '../../components/layout/ContentLayout'
 import MainLayout from '../../components/layout/MainLayout'
@@ -14,6 +15,40 @@ import dynamic from 'next/dynamic'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function Profile(props) {
+
+    const emp_id = props._id
+    const [status, setStatus] = useState(() => {
+        return props.status
+    })
+
+
+
+
+
+    function updateStatus(e) {
+        setStatus(e.target.name)
+    }
+
+
+    useEffect(() => {
+        async function submitForm() {
+            const response = await fetch('/api/updateStatus', {
+                method: 'POST',
+                body: JSON.stringify({
+                    emp_id: emp_id,
+                    status: status
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const data = await response.json()
+        }
+        submitForm()
+    }, [status])
+
+
 
 
     // piechart functions 
@@ -53,29 +88,34 @@ export default function Profile(props) {
         let button1 = document.getElementById('toggle-button1')
         let button2 = document.getElementById('toggle-button2')
         let button3 = document.getElementById('toggle-button3')
-        // alert(e.target.id)
-        if (e.target.id === "toggle-button1") {
+        if (e.target.name === "online") {
+            updateStatus(e)
+            console.log(status)
             e.target.classList.add('active')
-            e.target.style.backgroundColor='green'
+            e.target.style.backgroundColor = 'green'
             button2.classList.remove('active')
-            button2.style.backgroundColor=''
+            button2.style.backgroundColor = ''
             button3.classList.remove('active')
-            button3.style.backgroundColor=''
+            button3.style.backgroundColor = ''
 
-        } else if (e.target.id === "toggle-button2") {
+        } else if (e.target.name === "working") {
+            updateStatus(e)
+            console.log(status)
             e.target.classList.add('active')
-            e.target.style.backgroundColor='blue'
+            e.target.style.backgroundColor = 'blue'
             button1.classList.remove('active')
-            button1.style.backgroundColor=''
+            button1.style.backgroundColor = ''
             button3.classList.remove('active')
-            button3.style.backgroundColor=''
-        } else if (e.target.id === "toggle-button3") {
+            button3.style.backgroundColor = ''
+        } else if (e.target.name === "offline") {
             e.target.classList.add('active')
-            e.target.style.backgroundColor='red'
+            updateStatus(e)
+            console.log(status)
+            e.target.style.backgroundColor = 'red'
             button1.classList.remove('active')
-            button1.style.backgroundColor=''
+            button1.style.backgroundColor = ''
             button2.classList.remove('active')
-            button2.style.backgroundColor=''
+            button2.style.backgroundColor = ''
         }
     }
 
@@ -107,15 +147,15 @@ export default function Profile(props) {
                             {/* toggle button  */}
                             <div className="tri-state-toggle flex-row mx-14 mb-1">
 
-                                <button className="tri-state-toggle-button" id="toggle-button1" onClick={toggle}>
+                                <button className="tri-state-toggle-button" id="toggle-button1" name="online" onClick={toggle}>
                                     online
                                 </button>
 
-                                <button className="tri-state-toggle-button" id="toggle-button2" onClick={toggle}>
+                                <button className="tri-state-toggle-button" id="toggle-button2" name="working" onClick={toggle}>
                                     working
                                 </button>
 
-                                <button className="tri-state-toggle-button" id="toggle-button3" onClick={toggle}>
+                                <button className="tri-state-toggle-button" id="toggle-button3" name="offline" onClick={toggle}>
                                     offline
                                 </button>
 
@@ -260,6 +300,8 @@ export async function getServerSideProps(context) {
             image: result.image,
             experience: result.experience,
             jobs: result.jobs,
+            status: result.status,
+            _id: result._id.toString(),
             bookings: bookings.map(item => (
                 {
                     date: item.date,
@@ -271,7 +313,7 @@ export async function getServerSideProps(context) {
                     buildingName: item.buildingName,
                     building: item.building,
                     area: item.area,
-                    _id:item._id.toString()
+                    _id: item._id.toString()
                 }
             )),
 
