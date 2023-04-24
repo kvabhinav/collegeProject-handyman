@@ -12,11 +12,13 @@ import Navbar from '../../components/home/Navbar'
 
 // apexchart imports 
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function Profile(props) {
 
-    const emp_id = props._id
+    const emp_id = props._id.toString()
+    // console.log('"' + emp_id + '"')
     const [status, setStatus] = useState(() => {
         return props.status
     })
@@ -237,41 +239,69 @@ export default function Profile(props) {
                 <div className='border-black border-2 rounded-md mt-4 w-full'>
                     {/* booking lists  */}
                     <ul >
-                        {Object.keys(props.bookings).length !== 0 ? <h1 className="flex justify-center items-end my-10">No works yet...</h1> : props.bookings.map(booking => (
-                            <li key={booking._id}>
-                                <div className="bg-[#EDF4FA] h-40 mx-2 flex rounded-xl my-4">
-                                    <div className="section2">
-                                        <h1 className="heading">DATE</h1>
-                                        <h2 className="subheading">{booking.date}</h2>
-                                    </div>
-                                    <div className="section2">
-                                        <h1 className="heading">SERVICE TYPE</h1>
-                                        <h2 className="subheading">{booking.serviceType}</h2>
-                                    </div>
-                                    <div className="section2">
-                                        <h1 className="heading">SERVICING TIME</h1>
-                                        <h2 className="subheading">{booking.time}</h2>
-                                    </div>
-                                    <div className="section2">
-                                        <h1 className="heading">ADDRESS</h1>
+                        {Object.keys(props.bookings).length === 0 ? <h1 className="flex justify-center items-end my-10">No works yet...</h1> : props.bookings.map((booking) => {
+                            let color = ''
+                            if (booking.status === "booked") {
+                                color = "orange"
+                            } else if (booking.status === "pay") {
+                                color = "green"
+                            } else if (booking.status === "finished") {
+                                color = "blue"
+                            }
+                            return (
+                                <li key={booking._id}>
+                                    <div className="bg-[#EDF4FA] h-40 mx-2 flex rounded-xl my-4">
+                                        <div className="section2">
+                                            <h1 className="heading">DATE</h1>
+                                            <h2 className="subheading">{booking.date}</h2>
+                                        </div>
+                                        <div className="section2">
+                                            <h1 className="heading">SERVICE TYPE</h1>
+                                            <h2 className="subheading">{booking.serviceType}</h2>
+                                        </div>
+                                        <div className="section2">
+                                            <h1 className="heading">SERVICING TIME</h1>
+                                            <h2 className="subheading">{booking.time}</h2>
+                                        </div>
+                                        <div className="section2">
+                                            <h1 className="heading">ADDRESS</h1>
 
-                                        {/* <img src={booking.emp_image} alt="" className="w-24 h-24 contain mx-auto mt-2 rounded-full object-cover" /> */}
+                                            {/* <img src={booking.emp_image} alt="" className="w-24 h-24 contain mx-auto mt-2 rounded-full object-cover" /> */}
 
-                                        <h2 className="subheading pb-[1px] pt-2" >{booking.buildingName}({booking.building})</h2>
-                                        <h2 className="subheading py-[1px]" >{booking.area},{booking.city}</h2>
-                                        <h2 className="subheading py-[1px]" >{booking.pincode}</h2>
+                                            <h2 className="subheading pb-[1px] pt-2" >{booking.buildingName}({booking.building})</h2>
+                                            <h2 className="subheading py-[1px]" >{booking.area},{booking.city}</h2>
+                                            <h2 className="subheading py-[1px]" >{booking.pincode}</h2>
+                                        </div>
+                                        <div className="section2">
+                                            <h1 className="heading">PHONE NO</h1>
+                                            <h2 className="subheading">{booking.phoneNo}</h2>
+                                        </div>
+                                        <div className="section2">
+                                            <h1 className="heading">STATUS</h1>
+                                            {booking.status === "booked" ? <Link
+                                                href={{
+                                                    pathname: '/employee/billGeneration',
+                                                    query: {
+                                                        date: booking.date,
+                                                        serviceType: booking.serviceType,
+                                                        userName: booking.name,
+                                                        buildingName: booking.buildingName,
+                                                        building: booking.building,
+                                                        area: booking.area,
+                                                        city: booking.city,
+                                                        pincode: booking.pincode,
+                                                        emp_name: props.name,
+                                                        experience: props.experience,
+                                                        emp_id: emp_id,
+                                                        _id:booking._id
+                                                    }
+                                                }}><button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold text-center block w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }}>{booking.status}</button></Link> :
+                                                <button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold text-center block w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }}>{booking.status}</button>}
+                                        </div>
                                     </div>
-                                    <div className="section2">
-                                        <h1 className="heading">PHONE NO</h1>
-                                        <h2 className="subheading">{booking.phoneNo}</h2>
-                                    </div>
-                                    <div className="section2">
-                                        <h1 className="heading">STATUS</h1>
-                                        <h2 className="px-1 py-[0.5] bg-blue-700 rounded-xl text-sm font-semibold text-center w-20 mx-auto my-8 text-white">finish</h2>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
+                                </li>
+                            )
+                        })}
                     </ul>
 
                 </div>
@@ -286,7 +316,13 @@ export async function getServerSideProps(context) {
     const req = context.req
     const res = context.res
     const user = context.query
-    let userId = `${Object.getOwnPropertyNames(user)[0]}`
+
+    let userId
+    if (Object.keys(user).length === 0) {
+        userId = ""
+    } else {
+        userId = `${Object.getOwnPropertyNames(user)[0]}`
+    }
 
     const client = await clientPromise;
     const db = await client.db('collegeProject')
@@ -294,7 +330,7 @@ export async function getServerSideProps(context) {
     const bookings = await db.collection('bookings').find({ empl_id: new ObjectId(userId) }).toArray()
     return {
         props: {
-            name: result.firstName + result.lastName,
+            name: result.firstName + " " + result.lastName,
             email: result.email,
             phone: result.phone,
             image: result.image,
@@ -313,6 +349,8 @@ export async function getServerSideProps(context) {
                     buildingName: item.buildingName,
                     building: item.building,
                     area: item.area,
+                    status: item.status,
+                    name: item.name,
                     _id: item._id.toString()
                 }
             )),

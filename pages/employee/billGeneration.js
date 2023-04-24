@@ -1,14 +1,61 @@
 //@ts-nocheck
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { withRouter, useRouter } from 'next/router'
 
-export default function billGeneration(props) {
+function billGeneration({ router }) {
+
+
+    const router1 = useRouter()
+
+    // bill submission function 
+    async function sentBill() {
+        const response = await fetch('/api/billSubmission', {
+            method: 'POST',
+            body: JSON.stringify({
+                data: {
+                    data1: data1,
+                    data2: data2,
+                    data3: data3,
+                    data4: data4,
+                    data5: data5,
+                    total: total,
+                    date: router.query.date,
+                    serviceType: router.query.serviceType,
+                    userName: router.query.userName,
+                    buildingName: router.query.buildingName,
+                    building: router.query.building,
+                    area: router.query.area,
+                    city: router.query.city,
+                    pincode: router.query.pincode,
+                    emp_name: router.query.name,
+                    experience: router.query.experience
+                },
+                _id: router.query._id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+
+        const data = await response.json()
+        router.push({
+            pathname: "/employee/profile",
+            query: router.query.emp_id
+        })
+
+    }
+    console.log(router.query.emp_id)
+
+
+    
 
     // data set 1
-    const [data1,setData1]=useState({
-        service:"",
-        quantity:"",
-        rate:"",
-        amount:0
+    const [data1, setData1] = useState({
+        service: "",
+        quantity: "",
+        rate: "",
+        amount: 0
     })
     function handleChange1(event) {
         setData1(prevFormData => {
@@ -21,11 +68,11 @@ export default function billGeneration(props) {
     }
 
     // data set2 
-    const [data2,setData2]=useState({
-        service:"",
-        quantity:"",
-        rate:"",
-        amount:0
+    const [data2, setData2] = useState({
+        service: "",
+        quantity: "",
+        rate: "",
+        amount: 0
     })
     function handleChange2(event) {
         setData2(prevFormData => {
@@ -38,11 +85,11 @@ export default function billGeneration(props) {
     }
 
     // data set3 
-    const [data3,setData3]=useState({
-        service:"",
-        quantity:"",
-        rate:"",
-        amount:0
+    const [data3, setData3] = useState({
+        service: "",
+        quantity: "",
+        rate: "",
+        amount: 0
     })
     function handleChange3(event) {
         setData3(prevFormData => {
@@ -55,11 +102,11 @@ export default function billGeneration(props) {
     }
 
     // data set4 
-    const [data4,setData4]=useState({
-        service:"",
-        quantity:"",
-        rate:"",
-        amount:0
+    const [data4, setData4] = useState({
+        service: "",
+        quantity: "",
+        rate: "",
+        amount: 0
     })
     function handleChange4(event) {
         setData4(prevFormData => {
@@ -72,11 +119,11 @@ export default function billGeneration(props) {
     }
 
     // data set5 
-    const [data5,setData5]=useState({
-        service:"",
-        quantity:"",
-        rate:"",
-        amount:0
+    const [data5, setData5] = useState({
+        service: "",
+        quantity: "",
+        rate: "",
+        amount: 0
     })
     function handleChange5(event) {
         setData5(prevFormData => {
@@ -90,11 +137,11 @@ export default function billGeneration(props) {
 
 
     // total value handler 
-    const [total,setTotal]=useState(0)
+    const [total, setTotal] = useState(0)
 
-    useEffect(()=>{
-        setTotal(parseInt(data1.amount)+parseInt(data2.amount)+parseInt(data3.amount)+parseInt(data4.amount)+parseInt(data5.amount))
-    },[data1,data2,data3,data4,data5])
+    useEffect(() => {
+        setTotal(parseInt(data1.amount) + parseInt(data2.amount) + parseInt(data3.amount) + parseInt(data4.amount) + parseInt(data5.amount))
+    }, [data1, data2, data3, data4, data5])
     return (
 
         <div className="container px-40 ">
@@ -117,7 +164,7 @@ export default function billGeneration(props) {
                     </div>
 
                     <div className=" flex justify-end pr-36 pt-10">
-                        <h1 className="font-semibold text-base">Date:11/04/2023</h1>
+                        <h1 className="font-semibold text-base">Date:{router.query.date}</h1>
                     </div>
 
 
@@ -128,20 +175,20 @@ export default function billGeneration(props) {
                 <div className="grid grid-cols-2">
                     <div className=" pt-16 font-extrabold text-xl">
                         <span>BILL FROM,</span>
-                        <h2 className="font-semibold text-sm">Ajith</h2>
+                        <h2 className="font-semibold text-sm">{router.query.emp_name}</h2>
                         <h2 className="font-semibold text-sm">Handyman employee</h2>
                         <h2 className="font-semibold text-sm">Plumbing,Electrical works</h2>
-                        <h2 className="font-semibold text-sm">Experince :23 Works</h2>
+                        <h2 className="font-semibold text-sm">Experince :{router.query.experience} Works</h2>
                     </div>
 
 
                     <div className=" pl-40 pt-16 pr-28 font-extrabold text-xl">
                         <span>BILL TO,</span>
-                        <h2 className="font-semibold text-sm">Abhinav kv</h2>
-                        <h2 className="font-semibold text-sm">Valiyaparambil House,</h2>
-                        <h2 className="font-semibold text-sm">Onakkun PO,</h2>
-                        <h2 className="font-semibold text-sm">Payyannur (Via),</h2>
-                        <h2 className="font-semibold text-sm">Kasaragod (dist),</h2>
+                        <h2 className="font-semibold text-sm">{router.query.userName}</h2>
+                        <h2 className="font-semibold text-sm">{router.query.buildingName}({router.query.building}),</h2>
+                        <h2 className="font-semibold text-sm">{router.query.area},</h2>
+                        <h2 className="font-semibold text-sm">{router.query.city} (Via),</h2>
+                        <h2 className="font-semibold text-sm">{router.query.pincode},</h2>
                         <h2 className="font-semibold text-sm">Kerala</h2>
                     </div>
 
@@ -252,7 +299,7 @@ export default function billGeneration(props) {
 
 
                 <div className="text-sm font-bold flex justify-center mb-8">
-                    <input type="button" value="SENT" className="border-2 border-black rounded-md w-20" />
+                    <button className="border-2 border-black rounded-md w-20" onClick={sentBill}>SENT</button>
                 </div>
 
 
@@ -262,3 +309,4 @@ export default function billGeneration(props) {
         </div >
     )
 }
+export default withRouter(billGeneration)
