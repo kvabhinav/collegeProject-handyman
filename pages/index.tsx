@@ -44,11 +44,15 @@ export default function Home(props) {
         <Header user={props.userId} />
         <ContentLayout>
 
-          <div className='w-60 h-20 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup1'>
+          <div className='w-72 h-24 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup1'>
             <h1 className=''>SIGN IN TO REGISTER</h1>
           </div>
-          <div className='w-60 h-20 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup2'>
-            <h1 className=''>THE EMPLOYEE MUST BE ONLINE TO BOOK SERVICE</h1>
+          <div class="w-72 h-24  focus:ring-black font-bold text-lg shadow-lg hover:drop-shadow-xl items-center justify-center bg-[rgb(37,87,167)] hover:bg-[rgb(38,88,180)]  text-white rounded-xl top-1/2 left-[610px] z-50 fixed hidden" id="popup2">
+            <div class="text-center pt-1">
+              <h1>THE</h1>
+              <h1>EMPLOYEE MUST BE ONLINE TO </h1>
+              <h1>BOOK SERVICE</h1>
+            </div>
           </div>
 
           <ul className="grid grid-cols-2 m-4">
