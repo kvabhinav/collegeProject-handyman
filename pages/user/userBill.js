@@ -3,10 +3,12 @@
 
 import clientPromise from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
+import Link from 'next/link'
 
 
 export default function userBill(props) {
-    let item = "items"
+
+    console.log(props.userId)
 
     return (
         <div className="container px-40 ">
@@ -145,7 +147,12 @@ export default function userBill(props) {
 
 
                 <div className="text-sm font-bold flex justify-center mb-8 ">
-                    <button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button>
+                    {props.status === "pay" ? <Link href={{
+                        pathname: '/user/payment',
+                        query: {
+                            userId: props.userId,
+                        }
+                    }}><button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button></Link> : <Link><button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button></Link>}
                 </div>
 
 
@@ -160,7 +167,9 @@ export default function userBill(props) {
 export async function getServerSideProps(context) {
 
     const bookingId = context.query.bookingId
-    console.log(bookingId)
+    const status = context.query.status
+    const userId = context.query.userId
+    console.log(bookingId, status, userId)
     const client = await clientPromise;
     const db = await client.db('collegeProject')
     const result = await db.collection('bill').findOne({ bookingId: new ObjectId(`${bookingId}`) })
@@ -184,6 +193,8 @@ export async function getServerSideProps(context) {
             pincode: result.pincode,
             experience: result.experience,
             emp_name: result.emp_name,
+            status: status,
+            userId: userId,
             _id: result._id.toString()
         }
     }

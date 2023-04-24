@@ -7,6 +7,7 @@ import Link from "next/link"
 
 export default function Bookings(props) {
 
+    // console.log(props.userId)
     return (
         <MainLayout>
             <Navbar user={props.userId} />
@@ -58,7 +59,9 @@ export default function Bookings(props) {
                                                 <Link href={{
                                                     pathname: '/user/userBill',
                                                     query: {
-                                                      bookingId:booking.id.toString()
+                                                      bookingId:booking.id.toString(),
+                                                      userId:props.userId,
+                                                      status:booking.status
                                                     }
                                                 }}><button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }} >{booking.status}</button></Link> :
                                                 <button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }}>{booking.status}</button>}
@@ -96,7 +99,7 @@ export async function getServerSideProps(context) {
 
     
     const results = await response.json();
-    console.log(results)
+    // console.log(results)
     return {
         props: {
             bookings: results.map(result => (
@@ -111,7 +114,7 @@ export async function getServerSideProps(context) {
 
                 }
             )),
-            userId: userId
+            userId: userId,
         }
     }
 }

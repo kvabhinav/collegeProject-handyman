@@ -78,6 +78,23 @@ export default function (props) {
     }
 
 
+    // update status function 
+    // function updateStatus(){
+    //     async function submitForm() {
+    //         const response = await fetch('/api/updateStatus2', {
+    //             method: 'POST',
+    //             body: JSON.stringify({
+    //             }),
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         })
+
+    //         const data = await response.json()
+    //     }
+    // }
+
+
 
 
     return (
@@ -247,14 +264,14 @@ export default function (props) {
     )
 }
 
-// export async function getServerSideProps(context) {
-//     const req = context.req
-//     const res = context.res
-//     const userId = context.query.userId
-//     console.log(userId)
-//     return{
-//         props:{
-//             userId:userId.toString()
-//         }
-//     }
-// }
+export async function getServerSideProps(context) {
+    const req = context.req
+    const res = context.res
+    const userId = context.query.userId
+    console.log(userId)
+    return{
+        props:{
+            userId:userId
+        }
+    }
+}
