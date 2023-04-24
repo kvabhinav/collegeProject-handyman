@@ -28,31 +28,31 @@ export default function Card(props) {
     let color1 = ''
     let color2 = ''
     let color3 = ''
-    if (props.jobs[0].job === "Repairing") {
+    if (props.jobs[0].job === "repairing") {
         color1 = "#17B890"
         color2 = "#88CCF1"
         color3 = "#DEE5E5"
-    } else if (props.jobs[0].job === "Plumber") {
+    } else if (props.jobs[0].job === "plumber") {
         color1 = "#7A82AB"
         color2 = "#9DC5BB"
         color3 = "#C1DFF0"
-    } else if (props.jobs[0].job === "Electrician") {
+    } else if (props.jobs[0].job === "electrician") {
         color1 = '#9DB4AB'
         color2 = "#BBDB9B"
         color3 = "#ABC4A1"
-    } else if (props.jobs[0].job === "Carpenter") {
+    } else if (props.jobs[0].job === "carpenter") {
         color1 = '#2A324B'
         color2 = "#F7C59F"
         color3 = "#767B91"
-    } else if (props.jobs[0].job === "Tiling") {
+    } else if (props.jobs[0].job === "tiling") {
         color1 = '#485696'
         color2 = "#E7E7E7"
         color3 = "#F9C784"
-    } else if (props.jobs[0].job === "Plastering") {
+    } else if (props.jobs[0].job === "plastering") {
         color1 = '#A88FAC'
         color2 = "#5D4E60"
         color3 = "#E6F8B2"
-    } else if (props.jobs[0].job === "Painter") {
+    } else if (props.jobs[0].job === "painter") {
         color1 = '#A53F2B'
         color2 = "#CCC9A1"
         color3 = "#F0FFCE"
@@ -72,19 +72,19 @@ export default function Card(props) {
     })
 
     let jobColor= props.jobs.map((item)=>{
-        if(item.job==='Repairing'){
+        if(item.job==='repairing'){
             return "#17B890"
-        }else if(item.job==='Plumber'){
+        }else if(item.job==='plumber'){
             return "#7A82AB"
-        }else if(item.job==="Electrician"){
+        }else if(item.job==="electrician"){
             return "#9DB4AB"
-        }else if (item.job==="Carpenter"){
+        }else if (item.job==="carpenter"){
             return "#2A324B"
-        }else if(item.job==="Tiling"){
+        }else if(item.job==="tiling"){
             return "#485696"
-        }else if(item.job==="Plastering"){
+        }else if(item.job==="plastering"){
             return "#A88FAC"
-        }else if(item.job==="Painter"){
+        }else if(item.job==="painter"){
             return "#A53F2B"
         }
     })

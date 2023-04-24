@@ -12,7 +12,7 @@ function Form2({ router }) {
 
     // range and field functions 
     const [formData, setFormData] = useState({
-        job: 'Repairing',
+        job: 'repairing',
         min: 0,
         max: 0,
         count: 0
@@ -48,7 +48,7 @@ function Form2({ router }) {
         })
         setFormData(() => {
             return {
-                job: 'Repairing',
+                job: 'repairing',
                 min: 0,
                 max: 0,
                 count: 0
@@ -73,7 +73,7 @@ function Form2({ router }) {
 
     // district and place fields 
     const [places, setPlaces] = useState({
-        place: 'Payyannur'
+        place: 'payyannur'
     })
 
     const [array2, setArray2] = useState([])
@@ -106,7 +106,7 @@ function Form2({ router }) {
         })
         setPlaces(() => {
             return {
-                place: 'Payyannur'
+                place: 'payyannur'
             }
         })
     }
@@ -165,13 +165,13 @@ function Form2({ router }) {
                             <label htmlFor="" className='form-heading text-lg'>Select your Job</label>
                             <br />
                             <select name="job" id="" className='input_field my-2' value={formData.job} onChange={handleChange}>
-                                <option value="Repairing">Repairing</option>
-                                <option value="Electrician">Electrician</option>
-                                <option value="Plumber">Plumber</option>
-                                <option value="Carpenter">Carpenter</option>
-                                <option value="Painter">Painter</option>
-                                <option value="Plastering">Plastering</option>
-                                <option value="Tiling">Tiling</option>
+                                <option value="repairing">repairing</option>
+                                <option value="electrician">electrician</option>
+                                <option value="plumber">plumber</option>
+                                <option value="carpenter">carpenter</option>
+                                <option value="painter">painter</option>
+                                <option value="plastering">plastering</option>
+                                <option value="tiling">tiling</option>
                             </select>
                         </div>
                         <div className='border-black border-2 rounded-md w-fit p-2'>
@@ -193,7 +193,7 @@ function Form2({ router }) {
                     {/* job field display  */}
                     <div className='w-2/3  mt-32'>
                         {array.map((arr) => {
-                            if (arr.job === 'Electrical' && arr.job === "Repairing" && arr.job === "Plumbing") {
+                            if (arr.job === 'electrical' && arr.job === "repairing" && arr.job === "plumbing") {
                                 certificate = true
                             } else {
                                 certificate = false
@@ -238,9 +238,9 @@ function Form2({ router }) {
                         <option value="kannur" >kannur</option>
                     </select>
                     <select name="place" id="" className='input_field m-2 ' value={places.place} onChange={handleChange2}>
-                        <option value="Payyannur">Payyannur</option>
-                        <option value="Thalassery">Thalassery</option>
-                        <option value="Karivellur">Karivellur</option>
+                        <option value="payyannur">payyannur</option>
+                        <option value="thalassery">thalassery</option>
+                        <option value="karivellur">karivellur</option>
                     </select>
 
 

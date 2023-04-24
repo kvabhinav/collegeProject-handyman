@@ -92,9 +92,11 @@ export async function getServerSideProps(context) {
   if (jobTitle === undefined || location === undefined) {
     results = await db.collection('employees').find({}, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
   } else if (jobTitle !== undefined && location==="") {
-    results = await db.collection('employees').find({ "jobs.job": jobTitle }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+    results = await db.collection('employees').find({ "jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
   } else if (jobTitle === "" && location!== undefined){
-    results = await db.collection('employees').find({ "locations.place": location }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+    results = await db.collection('employees').find({ "locations.place": location.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+  } else if(jobTitle !== undefined && location !==undefined){
+    results = await db.collection('employees').find({ "locations.place": location.toLowerCase(),"jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
   }
   // console.log(results)
 
