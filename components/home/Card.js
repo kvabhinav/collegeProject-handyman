@@ -10,6 +10,16 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function Card(props) {
 
+    // status color handler 
+    let statusColor = ""
+    if (props.status === "online") {
+        statusColor = "#22c55e"
+    } else if (props.status === "offline") {
+        statusColor = "red"
+    } else if (props.status === "working") {
+        statusColor = "#1d4ed8"
+    }
+
     // card toggle function 
     function toggleclass(ind) {
         const elements = document.querySelectorAll('.card');
@@ -22,37 +32,51 @@ export default function Card(props) {
 
 
 
+    let len = props.jobs.length
+    let index = 0
+    // console.log(len)
+    if (len === 2) {
+        if (props.jobTitle === "" && len === 1) {
+            index = 0
+            console.log("hai")
+        } else if (props.jobs[1].job === props.jobTitle) {
+            index = 1
+
+        } else {
+            index = 0
+        }
+    }
 
 
     //  card color setting 
     let color1 = ''
     let color2 = ''
     let color3 = ''
-    if (props.jobs[0].job === "repairing") {
+    if (props.jobs[index].job === "repairing") {
         color1 = "#17B890"
         color2 = "#88CCF1"
         color3 = "#DEE5E5"
-    } else if (props.jobs[0].job === "plumber") {
+    } else if (props.jobs[index].job === "plumber") {
         color1 = "#7A82AB"
         color2 = "#9DC5BB"
         color3 = "#C1DFF0"
-    } else if (props.jobs[0].job === "electrician") {
+    } else if (props.jobs[index].job === "electrician") {
         color1 = '#9DB4AB'
         color2 = "#BBDB9B"
         color3 = "#ABC4A1"
-    } else if (props.jobs[0].job === "carpenter") {
+    } else if (props.jobs[index].job === "carpenter") {
         color1 = '#2A324B'
         color2 = "#F7C59F"
         color3 = "#767B91"
-    } else if (props.jobs[0].job === "tiling") {
+    } else if (props.jobs[index].job === "tiling") {
         color1 = '#485696'
         color2 = "#E7E7E7"
         color3 = "#F9C784"
-    } else if (props.jobs[0].job === "plastering") {
+    } else if (props.jobs[index].job === "plastering") {
         color1 = '#A88FAC'
         color2 = "#5D4E60"
         color3 = "#E6F8B2"
-    } else if (props.jobs[0].job === "painter") {
+    } else if (props.jobs[index].job === "painter") {
         color1 = '#A53F2B'
         color2 = "#CCC9A1"
         color3 = "#F0FFCE"
@@ -71,23 +95,24 @@ export default function Card(props) {
         }
     })
 
-    let jobColor= props.jobs.map((item)=>{
-        if(item.job==='repairing'){
+    let jobColor = props.jobs.map((item) => {
+        if (item.job === 'repairing') {
             return "#17B890"
-        }else if(item.job==='plumber'){
+        } else if (item.job === 'plumber') {
             return "#7A82AB"
-        }else if(item.job==="electrician"){
+        } else if (item.job === "electrician") {
             return "#9DB4AB"
-        }else if (item.job==="carpenter"){
+        } else if (item.job === "carpenter") {
             return "#2A324B"
-        }else if(item.job==="tiling"){
+        } else if (item.job === "tiling") {
             return "#485696"
-        }else if(item.job==="plastering"){
+        } else if (item.job === "plastering") {
             return "#A88FAC"
-        }else if(item.job==="painter"){
+        } else if (item.job === "painter") {
             return "#A53F2B"
         }
     })
+    // console.log(props.userId)
 
 
 
@@ -102,7 +127,7 @@ export default function Card(props) {
                     <div className="w-7/12 h-72 p-6 pb-4">
                         <div className="flex-row items-center h-1/6">
                             <h1 className="text-2xl font-bold ">{props.firstName} {props.lastName}</h1>
-                            <h1 className="online">online</h1>
+                            <h1 className="online" style={{ backgroundColor: `${statusColor}` }}>{props.status}</h1>
                         </div>
                         <h1 className="h-1/6 font-medium pt-4">Payment: {props.jobs[0].min}Rs to {props.jobs[0].max}Rs</h1>
                         <div className="h-3/6">
@@ -134,20 +159,24 @@ export default function Card(props) {
                         <div className="h-1/6 flex items-end justify-center">
 
                             {/* booking button  */}
-                            {props.userId !== "" ? <Link href={{
+                            {props.userId !== "" && props.status === "online" ? <Link href={{
                                 pathname: '/user/bookingForm',
                                 query: {
                                     emp_id: props.emp_id,
                                     name: props.firstName + props.lastName,
                                     image: props.image,
-                                    service: props.jobs[0].job,
+                                    service: props.jobs[index].job,
                                     userId: props.userId
                                 }
-                            }} onClick={(event)=>event.stopPropagation()}><button className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit">BOOK</button></Link> : <button
+                            }} onClick={(event) => event.stopPropagation()}><button className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit">BOOK</button></Link> : props.status === "online" ? <button
                                 className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit" onClick={(event) => {
                                     event.stopPropagation()
-                                    props.toggle()
-                                }}>BOOK</button>}
+                                    props.toggle("signin")
+                                }}>BOOK</button> : <button
+                                    className="px-4 py-[2px] hover:bg-[rgb(22,64,129)] bg-[rgb(37,87,167)] rounded-md font-bold text-white" type="submit" onClick={(event) => {
+                                        event.stopPropagation()
+                                        props.toggle("offline")
+                                    }}>BOOK</button>}
                         </div>
                     </div>
 
@@ -162,55 +191,55 @@ export default function Card(props) {
                                 <h1>{props.rating}</h1>
                             </div>
                         </div>
-                        <h1 className="text-white text-2xl font-bold text-center tracking-mamoth my-2 fieldFont">{props.jobs[0].job.toUpperCase()}</h1>
+                        <h1 className="text-white text-2xl font-bold text-center tracking-mamoth my-2 fieldFont">{props.jobs[index].job.toUpperCase()}</h1>
                     </div>
                 </div>
 
 
                 {/* card back side  */}
                 <div className="card__face card__face--back bg-[#3587A4] text-white rounded-3xl">
-                <div className='h-full w-full flex'>
-                            <div className="w-3/6 h-full flex">
-                                <Chart
-                                    className="my-auto mx-0"
-                                    type="donut"
-                                    width={300}
-                                    height={400}
-                                    series={jobCount}
-                                    options={{
-                                        title: {
-                                        },
-                                        noData: { text: "Empty Data" },
-                                        labels: jobName,
-                                        plotOptions: {
-                                            pie: {
-                                                donut: {
-                                                    labels: {
+                    <div className='h-full w-full flex'>
+                        <div className="w-3/6 h-full flex">
+                            <Chart
+                                className="my-auto mx-0"
+                                type="donut"
+                                width={300}
+                                height={400}
+                                series={jobCount}
+                                options={{
+                                    title: {
+                                    },
+                                    noData: { text: "Empty Data" },
+                                    labels: jobName,
+                                    plotOptions: {
+                                        pie: {
+                                            donut: {
+                                                labels: {
+                                                    show: true,
+                                                    total: {
                                                         show: true,
-                                                        total: {
-                                                            show: true,
-                                                            showAlways: true,
-                                                            fontSize: 16,
-                                                            color: '#fff',
-                                                        }
+                                                        showAlways: true,
+                                                        fontSize: 16,
+                                                        color: '#fff',
                                                     }
                                                 }
                                             }
-                                        },
-                                        colors: jobColor
-                                    }}
-                                >
-                                </Chart>
+                                        }
+                                    },
+                                    colors: jobColor
+                                }}
+                            >
+                            </Chart>
 
-                            </div>
-                            <div className="h-full w-3/6 flex justify-around itmes-end py-2 ">
-                                <div className="py-16">
-                                    <h1 className="text-6xl font-bold text-center">{props.experience}</h1>
-                                    <br />
-                                    <h2>days experience</h2>
-                                </div>
+                        </div>
+                        <div className="h-full w-3/6 flex justify-around itmes-end py-2 ">
+                            <div className="py-16">
+                                <h1 className="text-6xl font-bold text-center">{props.experience}</h1>
+                                <br />
+                                <h2>days experience</h2>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -11,17 +11,30 @@ import clientPromise from '@/lib/mongodb'
 
 export default function Home(props) {
 
-  function bookingHandler() {
-    const data = document.getElementById('popup')
-    console.log(data)
-    data.classList.add("flex")
-    data.classList.remove("hidden")
-    function showDiv() {
-      const data = document.getElementById('popup')
-      data.classList.add("hidden")
-      data.classList.remove("flex")
+  function bookingHandler(condition) {
+    if (condition === "signin") {
+      const data = document.getElementById('popup1')
+      console.log(data)
+      data.classList.add("flex")
+      data.classList.remove("hidden")
+      function showDiv() {
+        const data = document.getElementById('popup1')
+        data.classList.add("hidden")
+        data.classList.remove("flex")
+      }
+      setTimeout(showDiv, 2000);
+    } else if (condition === "offline") {
+      const data = document.getElementById('popup2')
+      console.log(data)
+      data.classList.add("flex")
+      data.classList.remove("hidden")
+      function showDiv() {
+        const data = document.getElementById('popup2')
+        data.classList.add("hidden")
+        data.classList.remove("flex")
+      }
+      setTimeout(showDiv, 2000);
     }
-    setTimeout(showDiv, 2000);
   }
 
   return (
@@ -31,8 +44,11 @@ export default function Home(props) {
         <Header user={props.userId} />
         <ContentLayout>
 
-          <div className='w-60 h-20 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup'>
+          <div className='w-60 h-20 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup1'>
             <h1 className=''>SIGN IN TO REGISTER</h1>
+          </div>
+          <div className='w-60 h-20 font-bold text-lg shadow-xl items-center justify-center hidden bg-blue-900 text-white rounded-xl  top-1/2 left-[610px] z-50 fixed' id='popup2'>
+            <h1 className=''>THE EMPLOYEE MUST BE ONLINE TO BOOK SERVICE</h1>
           </div>
 
           <ul className="grid grid-cols-2 m-4">
@@ -40,6 +56,7 @@ export default function Home(props) {
               <li className='my-4 mx-auto' key={card.id}>
                 <Card
                   toggle={bookingHandler}
+                  jobTitle={props.jobTitle.toLowerCase()}
                   userId={props.userId}
                   ind={index}
                   key={card.id}
@@ -53,6 +70,7 @@ export default function Home(props) {
                   image={card.image}
                   jobs={card.jobs}
                   cardType={card.jobs}
+                  status={card.status}
                   experience={card.experience}
                 />
               </li>
@@ -74,10 +92,10 @@ export async function getServerSideProps(context) {
   // searching variables 
   let jobTitle = ""
   let location = ""
-  jobTitle=context.query.jobTitle
-  location=context.query.location
+  jobTitle = context.query.jobTitle
+  location = context.query.location
 
-  console.log(location,jobTitle)
+  console.log(location, jobTitle)
   let userId
   if (Object.keys(user).length === 0) {
     userId = ""
@@ -90,13 +108,15 @@ export async function getServerSideProps(context) {
 
   let results = []
   if (jobTitle === undefined || location === undefined) {
+    location = ""
+    jobTitle = ""
     results = await db.collection('employees').find({}, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
-  } else if (jobTitle !== undefined && location==="") {
+  } else if (jobTitle !== undefined && location === "") {
     results = await db.collection('employees').find({ "jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
-  } else if (jobTitle === "" && location!== undefined){
+  } else if (jobTitle === "" && location !== undefined) {
     results = await db.collection('employees').find({ "locations.place": location.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
-  } else if(jobTitle !== undefined && location !==undefined){
-    results = await db.collection('employees').find({ "locations.place": location.toLowerCase(),"jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
+  } else if (jobTitle !== undefined && location !== undefined) {
+    results = await db.collection('employees').find({ "locations.place": location.toLowerCase(), "jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
   }
   // console.log(results)
 
@@ -111,10 +131,12 @@ export async function getServerSideProps(context) {
           jobs: result.jobs,
           experience: result.experience,
           rating: result.rating,
+          status: result.status,
           id: result._id.toString()
         }
       )),
-      userId: userId
+      userId: userId,
+      jobTitle: jobTitle,
     }
   }
 }

@@ -21,7 +21,8 @@ export default function Form() {
         state: "",
         image: '',
         experience:'0',
-        rating:'new'
+        rating:'new',
+        status:'offline'
     })
 
 

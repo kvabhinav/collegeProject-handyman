@@ -97,7 +97,7 @@
   }
 
   .online{
-    @apply px-2 py-[0.5] bg-green-500 rounded-xl text-sm font-semibold mx-1 w-fit 
+    @apply px-2 py-[0.5] rounded-xl text-sm font-semibold mx-1 w-fit 
   }
 
   .element{
