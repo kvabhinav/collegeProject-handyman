@@ -122,6 +122,9 @@ export async function getServerSideProps(context) {
   } else if (jobTitle !== undefined && location !== undefined) {
     results = await db.collection('employees').find({ "locations.place": location.toLowerCase(), "jobs.job": jobTitle.toLowerCase() }, { sex: 0, dob: 0, email: 0, phone: 0, house: 0, area: 0, city: 0, postcode: 0, district: 0, firstName: 0 }).toArray()
   }
+  // let c={
+  //   hai:results[0]._id.toString()}
+  // console.log(c.hai)
   // console.log(results)
 
   return {

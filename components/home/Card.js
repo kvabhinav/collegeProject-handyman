@@ -9,6 +9,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 
 export default function Card(props) {
+    console.log(props.emp_id)
 
     // status color handler 
     let statusColor = ""

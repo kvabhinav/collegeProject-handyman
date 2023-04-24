@@ -8,7 +8,6 @@ export default async function handler2(req,res){
     const user=req.body
     // console.log(user)
     // const user="641568423b4cf496a76f9cf0"
-
     let userId
     if (user==="") {
         userId = ""

@@ -5,6 +5,7 @@ import React from 'react'
 import Link from 'next/link'
 
 function BookingForm({ router }) {
+    console.log(router.query.emp_id,router.query.userId)
 
     // formdata state 
     const [formData, setFormData] = useState({

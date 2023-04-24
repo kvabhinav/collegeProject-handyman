@@ -94,7 +94,9 @@ export async function getServerSideProps(context) {
         }
     })
 
+    
     const results = await response.json();
+    console.log(results)
     return {
         props: {
             bookings: results.map(result => (
