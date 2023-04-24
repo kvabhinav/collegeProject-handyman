@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const itemId=req.body._id
     const client = await clientPromise;
     const db = await client.db('collegeProject')
-    const result = await db.collection('bill').insertOne({ ...data })
+    const result = await db.collection('bill').insertOne({ ...data ,bookingId:new ObjectId(`${itemId}`)})
     const result1= await db.collection('bookings').updateOne({_id:new ObjectId(`${itemId}`)},{$set:{status:"pay"}},{upsert:false})
     res.json(result)
     res.json(result1)

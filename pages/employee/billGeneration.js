@@ -27,7 +27,7 @@ function billGeneration({ router }) {
                     area: router.query.area,
                     city: router.query.city,
                     pincode: router.query.pincode,
-                    emp_name: router.query.name,
+                    emp_name: router.query.emp_name,
                     experience: router.query.experience
                 },
                 _id: router.query._id

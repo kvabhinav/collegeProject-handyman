@@ -1,7 +1,13 @@
 //@ts-nocheck
 
+
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
+
+
 export default function userBill(props) {
     let item = "items"
+
     return (
         <div className="container px-40 ">
             <div className="mx-auto border-2 border-black pl-8 pr-8 mt-8 mb-8" >
@@ -23,7 +29,7 @@ export default function userBill(props) {
                     </div>
 
                     <div className=" flex justify-end pr-36 pt-10">
-                        <h1 className="font-semibold text-base">Date:11/04/2023</h1>
+                        <h1 className="font-semibold text-base">Date:{props.date}</h1>
                     </div>
 
 
@@ -34,20 +40,20 @@ export default function userBill(props) {
                 <div className="grid grid-cols-2">
                     <div className=" pt-16 font-extrabold text-xl">
                         <span>BILL FROM,</span>
-                        <h2 className="font-semibold text-sm">Ajith</h2>
+                        <h2 className="font-semibold text-sm">{props.emp_name}</h2>
                         <h2 className="font-semibold text-sm">Handyman employee</h2>
                         <h2 className="font-semibold text-sm">Plumbing,Electrical works</h2>
-                        <h2 className="font-semibold text-sm">Experince :23 Works</h2>
+                        <h2 className="font-semibold text-sm">Experince :{props.experience} Works</h2>
                     </div>
 
 
                     <div className=" pl-40 pt-16 pr-28 font-extrabold text-xl">
                         <span>BILL TO,</span>
-                        <h2 className="font-semibold text-sm">Abhinav kv</h2>
-                        <h2 className="font-semibold text-sm">Valiyaparambil House,</h2>
-                        <h2 className="font-semibold text-sm">Onakkun PO,</h2>
-                        <h2 className="font-semibold text-sm">Payyannur (Via),</h2>
-                        <h2 className="font-semibold text-sm">Kasaragod (dist),</h2>
+                        <h2 className="font-semibold text-sm">{props.userName}</h2>
+                        <h2 className="font-semibold text-sm">{props.buildingName} ({props.building}),</h2>
+                        <h2 className="font-semibold text-sm"> {props.area}</h2>
+                        <h2 className="font-semibold text-sm">{props.city} (Via),</h2>
+                        <h2 className="font-semibold text-sm">{props.pincode},</h2>
                         <h2 className="font-semibold text-sm">Kerala</h2>
                     </div>
 
@@ -83,33 +89,33 @@ export default function userBill(props) {
                         <tbody>
                             <tr className=" border-b-2 text-black">
                                 <td scope="row" className="px-6 py-4 border-r-2">
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
+                                    <span>{props.data1.service}</span><br />
+                                    <span>{props.data2.service}</span><br />
+                                    <span>{props.data3.service}</span><br />
+                                    <span>{props.data4.service}</span><br />
+                                    <span>{props.data5.service}</span><br />
                                 </td>
                                 <td className="px-6 py-4 border-r-2">
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
+                                    <span>{props.data1.quantity}</span><br />
+                                    <span>{props.data2.quantity}</span><br />
+                                    <span>{props.data3.quantity}</span><br />
+                                    <span>{props.data4.quantity}</span><br />
+                                    <span>{props.data5.quantity}</span><br />
                                 </td>
                                 <td className="px-6 py-4 border-r-2">
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
+                                    <span>{props.data1.rate}</span><br />
+                                    <span>{props.data2.rate}</span><br />
+                                    <span>{props.data3.rate}</span><br />
+                                    <span>{props.data4.rate}</span><br />
+                                    <span>{props.data5.rate}</span><br />
 
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
-                                    <span>{item}</span><br />
+                                    <span>{props.data1.amount}</span><br />
+                                    <span>{props.data2.amount}</span><br />
+                                    <span>{props.data3.amount}</span><br />
+                                    <span>{props.data4.amount}</span><br />
+                                    <span>{props.data5.amount}</span><br />
                                 </td>
 
                             </tr>
@@ -124,7 +130,7 @@ export default function userBill(props) {
                                     TOTAL
                                 </th>
                                 <td className="px-6 py-4 text-center">
-                                    Rs.1170
+                                    {props.total}
                                 </td>
 
 
@@ -139,7 +145,7 @@ export default function userBill(props) {
 
 
                 <div className="text-sm font-bold flex justify-center mb-8 ">
-                    <span>Thank you For Selecting Handyman</span>
+                    <button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button>
                 </div>
 
 
@@ -149,4 +155,36 @@ export default function userBill(props) {
         </div>
 
     )
+}
+
+export async function getServerSideProps(context) {
+
+    const bookingId = context.query.bookingId
+    console.log(bookingId)
+    const client = await clientPromise;
+    const db = await client.db('collegeProject')
+    const result = await db.collection('bill').findOne({ bookingId: new ObjectId(`${bookingId}`) })
+    console.log(result)
+
+    return {
+        props: {
+            data1: result.data1,
+            data2: result.data2,
+            data3: result.data3,
+            data4: result.data4,
+            data5: result.data5,
+            total: result.total,
+            date: result.date,
+            serviceType: result.serviceType,
+            userName: result.userName,
+            buildingName: result.buildingName,
+            building: result.building,
+            area: result.area,
+            city: result.city,
+            pincode: result.pincode,
+            experience: result.experience,
+            emp_name: result.emp_name,
+            _id: result._id.toString()
+        }
+    }
 }

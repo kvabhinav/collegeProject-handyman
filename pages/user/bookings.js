@@ -7,7 +7,6 @@ import Link from "next/link"
 
 export default function Bookings(props) {
 
-
     return (
         <MainLayout>
             <Navbar user={props.userId} />
@@ -59,7 +58,7 @@ export default function Bookings(props) {
                                                 <Link href={{
                                                     pathname: '/user/userBill',
                                                     query: {
-                                                      
+                                                      bookingId:booking.id.toString()
                                                     }
                                                 }}><button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }} >{booking.status}</button></Link> :
                                                 <button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }}>{booking.status}</button>}
