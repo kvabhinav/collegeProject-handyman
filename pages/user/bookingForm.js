@@ -21,7 +21,8 @@ function BookingForm({ router }) {
         time:new Date().toLocaleTimeString(),
         service:router.query.service,
         emp_name:router.query.name,
-        emp_image:router.query.image
+        emp_image:router.query.image,
+        status:"booked"
     })
 
 
