@@ -70,7 +70,7 @@ export default function EmpSignin() {
 
                 <form action="#">
                     <div className="mt-5 font-semibold text-sm">
-                        <label>User name or Email</label>
+                        <label>Email</label>
                         <input type="text" className="block w-full px-4 py-2 border rounded-xl border-gray-500 shadow-md" name="email" value={user.email} onChange={handleChange} />
                     </div>
 

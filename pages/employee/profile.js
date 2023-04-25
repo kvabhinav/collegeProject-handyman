@@ -192,7 +192,7 @@ export default function Profile(props) {
                         </div>
                         <div className="flex w-full ">
                             <div className="w-6/12 ">
-                                {totalJobs !== 0 ? <Chart
+                                {/* {totalJobs !== 0 ? <Chart
                                     className="my-auto ml-16"
                                     type="donut"
                                     width={300}
@@ -220,7 +220,7 @@ export default function Profile(props) {
                                         colors: jobColor
                                     }}
                                 >
-                                </Chart> : <h1 className="font-bold text-black text-center text-3xl my-14">0 work taken</h1>}
+                                </Chart> : <h1 className="font-bold text-black text-center text-3xl my-14">0 work taken</h1>} */}
                             </div>
                             <div className="w-6/12 flex-col justify-center items-center p-6">
                                 <div className="bg-[#99DAFF] h-14 w-56 rounded-lg border-2 border-gray-200 shadow-lg hover:shadow-inner p-1 ml-auto mr-10">
