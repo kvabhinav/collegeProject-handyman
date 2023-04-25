@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import MainLayout from "../../components/layout/MainLayout"
 import Navbar from "../../components/home/Navbar"
 import Link from "next/link"
@@ -49,23 +51,30 @@ export default function Bookings(props) {
 
                                             <h2 className="subheading py-1" >{booking.emp_name}</h2>
                                         </div>
-                                        <div className="w-1/6 h-40 p-2 flex-col items-center justify-between">
+                                        {/* <div className="w-1/6 h-40 p-2 flex-col items-center justify-between">
                                             <h1 className="heading">PAYMENT</h1>
                                             <h2 className="subheading">1500Rs</h2>
-                                        </div>
+                                        </div> */}
                                         <div className="section">
                                             <h1 className="heading">STATUS</h1>
                                             {booking.status === "pay" ?
                                                 <Link href={{
                                                     pathname: '/user/userBill',
                                                     query: {
-                                                      bookingId:booking.id.toString(),
-                                                      userId:props.userId,
-                                                      status:booking.status
+                                                        bookingId: booking.id.toString(),
+                                                        userId: props.userId,
+                                                        status: booking.status
                                                     }
                                                 }}><button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }} >{booking.status}</button></Link> :
                                                 <button className="px-1 py-[0.5]  rounded-xl text-sm font-semibold block text-center w-20 mx-auto my-8 text-white" style={{ backgroundColor: `${color}` }}>{booking.status}</button>}
-                                            <a href="" className="underline block mx-auto w-10">Details</a>
+                                            {booking.status === "booked" ? <a className="underline block mx-auto w-10">Details</a> : <Link href={{
+                                                pathname: '/user/userBill',
+                                                query: {
+                                                    bookingId: booking.id.toString(),
+                                                    userId: props.userId,
+                                                    status: booking.status
+                                                }
+                                            }} className="underline block mx-auto w-10">Details</Link>}
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +106,7 @@ export async function getServerSideProps(context) {
         }
     })
 
-    
+
     const results = await response.json();
     // console.log(results)
     return {

@@ -152,7 +152,7 @@ export default function userBill(props) {
                         query: {
                             userId: props.userId,
                         }
-                    }}><button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button></Link> : <Link><button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button></Link>}
+                    }}><button className='px-4 py-1 border-2 border-black rounded-md'>PAY</button></Link> : <a><button className='px-4 py-1 border-2 border-black rounded-md'>PAID</button></a>}
                 </div>
 
 

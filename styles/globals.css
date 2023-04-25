@@ -120,7 +120,7 @@
   }
 
   .section{
-    @apply w-1/6 h-40 p-2 flex-col
+    @apply w-1/5 h-40 p-2 flex-col
   }
 
   /* employee profile  */
